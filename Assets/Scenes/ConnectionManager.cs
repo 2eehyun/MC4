@@ -9,6 +9,11 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     public TMP_InputField IDtext;
     public Button connetBtn;
 
+    public float repeatInterval = 1.0f;
+    private bool isRepeating = false;
+
+    private new PhotonView photonView; // PhotonView 컴포넌트를 저장할 변수
+
     void Start()
     {
         // Photon PUN 초기화
@@ -32,9 +37,12 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         print("서버 접속 완료");
-        
+
         // 서버에 연결되면 Connect 버튼을 누를 때 매칭을 시도
         connetBtn.interactable = true;
+
+        // PhotonView 컴포넌트를 초기화
+        photonView = GetComponent<PhotonView>();
     }
 
     public override void OnJoinedRoom()
@@ -44,15 +52,28 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         // 두 명의 플레이어가 매칭되면 이곳에서 게임을 시작하거나 다른 처리를 할 수 있습니다.
 
         // 정보를 주고받을 함수 호출
-        if (PhotonNetwork.IsMasterClient)
+         if (!isRepeating)
         {
-            // 마스터 클라이언트는 SendInfoToClient 함수를 호출하여 정보를 전달
-            SendInfoToClient();
+            InvokeRepeating("RepeatFunction", 0f, repeatInterval);
+            isRepeating = true;
         }
-        else
+    }
+
+    // 10초마다 호출할 함수
+    private void RepeatFunction()
+    {
+        if (PhotonNetwork.IsConnected && photonView != null)
         {
-            // 마스터 클라이언트가 아닌 경우, 마스터 클라이언트로부터 정보를 받아올 준비를 함
-            photonView.RPC("RequestInfoFromMasterClient", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                // 마스터 클라이언트는 SendInfoToClient 함수를 호출하여 정보를 전달
+                SendInfoToClient();
+            }
+            else
+            {
+                // 마스터 클라이언트가 아닌 경우, 마스터 클라이언트로부터 정보를 받아올 준비를 함
+                photonView.RPC("RequestInfoFromMasterClient", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer);
+            }
         }
     }
 
@@ -60,7 +81,6 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void SendInfoToClient()
     {
-        // 마스터 클라이언트에서 다른 플레이어에게 정보를 전달하는 로직
         string message = "Hello, other client!";
         photonView.RPC("ReceiveInfoFromMasterClient", RpcTarget.Others, message);
     }
@@ -68,7 +88,14 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void ReceiveInfoFromMasterClient(string message)
     {
-        // 마스터 클라이언트로부터 정보를 받아오는 로직
-        print("Received message: " + message);
+        // 상대가 null이 아닌 경우에만 로직을 실행
+        if (!string.IsNullOrEmpty(message))
+        {
+            print("Received message: " + message);
+        }
+        else
+        {
+            print("Received empty message from master client.");
+        }
     }
 }

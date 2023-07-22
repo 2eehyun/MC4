@@ -20,10 +20,13 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         ConnectionStatus.text = PhotonNetwork.NetworkClientState.ToString();
     }
 
-    public void Connect()
+     public void ConnectAndJoinOrCreateRoom()
     {
         // 서버에 플레이어 이름 설정
         PhotonNetwork.LocalPlayer.NickName = IDtext.text;
+
+        // 동일한 룸 이름으로 룸에 접속하거나 생성
+        PhotonNetwork.JoinOrCreateRoom("MyRoom", new RoomOptions { MaxPlayers = 2 }, TypedLobby.Default);
     }
 
     public override void OnConnectedToMaster()
@@ -32,12 +35,6 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         
         // 서버에 연결되면 Connect 버튼을 누를 때 매칭을 시도
         connetBtn.interactable = true;
-    }
-
-    public void CreateRoom()
-    {
-        // 동일한 룸 이름으로 룸 생성
-        PhotonNetwork.CreateRoom("MyRoom", new RoomOptions { MaxPlayers = 2 });
     }
 
     public override void OnJoinedRoom()

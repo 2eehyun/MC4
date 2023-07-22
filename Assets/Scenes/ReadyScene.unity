@@ -1004,7 +1004,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 373139454}
         m_TargetAssemblyTypeName: ConnectionManager, Assembly-CSharp
-        m_MethodName: Connect
+        m_MethodName: ConnectAndJoinOrCreateRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -148,9 +148,9 @@ public class MapGenerator : MonoBehaviour
     {
         int x = Mathf.RoundToInt(position.x / tileSize + (currentMap.mapSize.x - 1) / 2f);
         int y = Mathf.RoundToInt(position.z / tileSize + (currentMap.mapSize.y - 1) / 2f);
-        x = Mathf.Clamp(x, 0, tileMap.GetLength(0));
-        y = Mathf.Clamp(y, 0, tileMap.GetLength(1))
-;        return tileMap[x, y];
+        x = Mathf.Clamp(x, 0, tileMap.GetLength(0) - 1);
+        y = Mathf.Clamp(y, 0, tileMap.GetLength(1) - 1);
+        return tileMap[x, y];
     }
 
     public Coord GetRandomCoord()

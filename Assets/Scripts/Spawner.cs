@@ -25,6 +25,8 @@ public class Spawner : MonoBehaviour
     Vector3 campPositionOld;
     bool isCamping;
 
+    bool isDisabled;
+
     private void Start()
     {
         playerEntity = FindObjectOfType<Player>();
@@ -32,6 +34,7 @@ public class Spawner : MonoBehaviour
 
         nextCampCheckTime = timeBetweenCampingChecks + Time.time;
         campPositionOld = playerT.position;
+        playerEntity.OnDeath += OnPlayerDeath;
 
         map = FindObjectOfType<MapGenerator>();
         NextWave();
@@ -39,20 +42,23 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        if (Time.time > nextCampCheckTime)
+        if (!isDisabled)
         {
-            nextCampCheckTime = Time.time + timeBetweenCampingChecks;
+            if (Time.time > nextCampCheckTime)
+            {
+                nextCampCheckTime = Time.time + timeBetweenCampingChecks;
 
-            isCamping = (Vector3.Distance(playerT.position, campPositionOld) < campThresholdDistance);
-            campPositionOld = playerT.position;
-        }
+                isCamping = (Vector3.Distance(playerT.position, campPositionOld) < campThresholdDistance);
+                campPositionOld = playerT.position;
+            }
 
-        if (enemiesRemainingToSpawn > 0 && Time.time > nextSpawnTime)
-        {
-            enemiesRemainingToSpawn--;
-            nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
+            if (enemiesRemainingToSpawn > 0 && Time.time > nextSpawnTime)
+            {
+                enemiesRemainingToSpawn--;
+                nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
 
-            StartCoroutine(SpawnEnemy());
+                StartCoroutine(SpawnEnemy());
+            }
         }
     }
 
@@ -83,6 +89,10 @@ public class Spawner : MonoBehaviour
         spawnedEnemy.OnDeath += OnEnemyDeath;
     }
 
+    void OnPlayerDeath()
+    {
+        isDisabled = true;
+    }
     void OnEnemyDeath()
     {
         enemiesRemainingAlive--;

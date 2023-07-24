@@ -67,7 +67,7 @@ public class PlayerScript : LivingEntity, IPunObservable
             // Weapon input
             if (Input.GetMouseButton(0))
             {
-                gunController.Shoot();
+                gunController.OnTriggerHold();
             }
             // 여기는 어떻게해야함 ? 그냥 rotation 정보 주기 ?
             PV.RPC("SyncRotation", RpcTarget.Others, transform.rotation);

@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4476782684855641847}
   - component: {fileID: 6525426625512406999}
   - component: {fileID: 722373335997113693}
-  - component: {fileID: 3242913861975360079}
+  - component: {fileID: 412671575634909622}
+  - component: {fileID: 4317045064389943037}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -99,3 +100,19 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!208 &4317045064389943037
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8933135781718162989}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

@@ -12,6 +12,8 @@ public class ConManager : MonoBehaviourPunCallbacks
     public TMP_InputField IDtext;
     public Button connectBtn;
 
+    public Transform[] spawnPoints;
+
     void Awake()
     {
         Screen.SetResolution(960, 540, false);
@@ -22,6 +24,10 @@ public class ConManager : MonoBehaviourPunCallbacks
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
+        spawnPoints[0] = new GameObject().transform;
+        spawnPoints[0].position = new Vector3(0, 1, 2);
+        spawnPoints[1] = new GameObject().transform;
+        spawnPoints[1].position = new Vector3(0, 1, -2);
     }
 
     void Update()
@@ -43,11 +49,7 @@ public class ConManager : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom() => print("룸 생성 완료");
 
-    public override void OnJoinedRoom()
-    {
-        print("룸 접속 완료");
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 2) { PhotonNetwork.LoadLevel("player2"); }
-    }
+    public override void OnJoinedRoom() => print("룸 접속 완료");
 
     public override void OnCreateRoomFailed(short returnCode, string message) => print("방만들기실패");
 
@@ -56,7 +58,21 @@ public class ConManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         print("플레이어 입장: " + newPlayer.NickName);
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 2) { PhotonNetwork.LoadLevel("player2"); }
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+        {
+            if (PhotonNetwork.IsMasterClient) // 방장만 처리하도록 변경
+            {
+                // 첫 번째 플레이어 생성
+                GameObject player1 = PhotonNetwork.Instantiate("Player", spawnPoints[0].position, Quaternion.identity);
+                player1.GetComponent<PlayerScript>().PV.RPC("SetPlayerPosition", RpcTarget.AllBuffered, spawnPoints[0].position);
+
+                // 두 번째 플레이어 생성
+                GameObject player2 = PhotonNetwork.Instantiate("Player", spawnPoints[1].position, Quaternion.identity);
+                player2.GetComponent<PlayerScript>().PV.RPC("SetPlayerPosition", RpcTarget.AllBuffered, spawnPoints[1].position);
+
+                PhotonNetwork.LoadLevel("player2");
+            }
+        }
     }
 
     [ContextMenu("정보")]

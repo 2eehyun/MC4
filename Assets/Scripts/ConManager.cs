@@ -12,12 +12,11 @@ public class ConManager : MonoBehaviourPunCallbacks
     public TMP_InputField IDtext;
     public Button connectBtn;
 
-    public float repeatInterval = 1.0f;
-    private bool isRepeating = false;
-
     void Awake()
     {
         Screen.SetResolution(960, 540, false);
+        PhotonNetwork.SendRate = 60;
+        PhotonNetwork.SerializationRate = 30;
     }
     
     void Start()
@@ -42,13 +41,23 @@ public class ConManager : MonoBehaviourPunCallbacks
         connectBtn.interactable = true;
     }
 
-    public override void OnCreatedRoom() => print("룸 생성 완료: " + PhotonNetwork.CurrentRoom.Name);
+    public override void OnCreatedRoom() => print("룸 생성 완료");
 
-    public override void OnJoinedRoom() => print("룸 접속 완료: " + PhotonNetwork.CurrentRoom.Name);
+    public override void OnJoinedRoom()
+    {
+        print("룸 접속 완료");
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2) { PhotonNetwork.LoadLevel("player2"); }
+    }
 
     public override void OnCreateRoomFailed(short returnCode, string message) => print("방만들기실패");
 
     public override void OnJoinRoomFailed(short returnCode, string message) => print("방참가실패");
+
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+        print("플레이어 입장: " + newPlayer.NickName);
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2) { PhotonNetwork.LoadLevel("player2"); }
+    }
 
     [ContextMenu("정보")]
     void Info()

@@ -284,13 +284,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 373139452}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4c197129d363ee4b970899ea3d989f1, type: 3}
+  m_Script: {fileID: 11500000, guid: bdf5e826a13124144bc5274b7ac75dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ConnectionStatus: {fileID: 1140958446}
   IDtext: {fileID: 735398126}
   connectBtn: {fileID: 1371109415}
-  repeatInterval: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

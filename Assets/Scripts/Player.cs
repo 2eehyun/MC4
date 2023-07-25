@@ -60,8 +60,14 @@ public class Player : LivingEntity, IPunObservable
             // Weapon input
             if (Input.GetMouseButton(0))
             {
+                print("요기요");
                 gunController.OnTriggerHold();
             }
+            if (Input.GetMouseButtonUp(0))
+            {
+                gunController.OnTriggerRelease();
+            }
+
             // 여기는 어떻게해야함 ? 그냥 rotation 정보 주기 ?
             PV.RPC("SyncRotation", RpcTarget.All, transform.rotation);
         }

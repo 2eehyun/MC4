@@ -81,6 +81,7 @@ public class Gun : MonoBehaviourPunCallbacks
     [PunRPC]
     public void OnTriggerHold()
     {
+        print("제발");
         Shoot();
         triggerReleasedSinceLastShot = false;
     }

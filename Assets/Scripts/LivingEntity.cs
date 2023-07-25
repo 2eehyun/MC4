@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class LivingEntity : MonoBehaviour, IDamageable
+public class LivingEntity : MonoBehaviourPunCallbacks, IDamageable
 {
     public float startingHealth;
     protected float health;
@@ -14,6 +16,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     {
         health = startingHealth;
     }
+
     public virtual void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
     {
         TakeDamage(damage);

@@ -1,19 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class Gun : MonoBehaviour
+public class Gun : MonoBehaviourPunCallbacks
 {
-    public enum FireMode { Auto, Burst, Single};
+    public PhotonView PV;
+    int dir;
+
+    public enum FireMode { Auto, Burst, Single };
     public FireMode fireMode;
 
     public Transform muzzle;
-    public Projectile projectile;
+    public GameObject projectilePrefab; // GameObject 타입으로 변경
     public float msBetweenShots = 100;
     public float muzzleVelocity = 35;
     public int burstCount;
 
     public Transform shell;
+    public GameObject shellPrefab; // GameObject 타입으로 변경
     public Transform shellEjection;
     MuzzleFlash muzzleflash;
 
@@ -27,6 +33,8 @@ public class Gun : MonoBehaviour
     }
 
     float nextShotTime;
+
+    [PunRPC]
     public void Shoot()
     {
         if (Time.time > nextShotTime)
@@ -38,23 +46,39 @@ public class Gun : MonoBehaviour
                     return;
                 }
                 shotsRemainingInBurst--;
-            } else if (fireMode == FireMode.Single)
+            }
+            else if (fireMode == FireMode.Single)
             {
                 if (!triggerReleasedSinceLastShot)
                 {
                     return;
                 }
             }
+            print("shooooooot!");
 
             nextShotTime = Time.time + msBetweenShots / 1000;
-            Projectile newProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation);
-            newProjectile.SetSpeed(muzzleVelocity);
+            GameObject newProjectile = PhotonNetwork.Instantiate(projectilePrefab.name, muzzle.position, muzzle.rotation);
+            newProjectile.GetComponent<Projectile>().SetSpeed(muzzleVelocity);
 
-            Instantiate(shell, shellEjection.position, shellEjection.rotation);
+            PhotonNetwork.Instantiate(shellPrefab.name, shellEjection.position, shellEjection.rotation);
             muzzleflash.Activate();
+
+            // 다른 클라이언트에도 총알이 보이도록 RPC 호출
+            PV.RPC("OnShoot", RpcTarget.Others);
         }
     }
 
+    [PunRPC]
+    public void OnShoot()
+    {
+        // 다른 클라이언트에서도 총알 생성과 효과 발동
+        GameObject newProjectile = Instantiate(projectilePrefab, muzzle.position, muzzle.rotation);
+        newProjectile.GetComponent<Projectile>().SetSpeed(muzzleVelocity);
+        Instantiate(shellPrefab, shellEjection.position, shellEjection.rotation);
+        muzzleflash.Activate();
+    }
+
+    [PunRPC]
     public void OnTriggerHold()
     {
         Shoot();

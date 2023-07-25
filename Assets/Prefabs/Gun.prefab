@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cddf013d276e6f45b195322f74e641f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireMode: 1
+  fireMode: 2
   muzzle: {fileID: 1830158501081973784}
   projectile: {fileID: 3242913861975360079, guid: c5a53bb74fff14345aff78eff7989c55, type: 3}
   msBetweenShots: 100

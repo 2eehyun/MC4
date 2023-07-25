@@ -119,7 +119,7 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 320
-  trailColour: {r: 0, g: 0, b: 0, a: 0}
+  trailColour: {r: 1, g: 1, b: 1, a: 0}
 --- !u!96 &2838596375313199106
 TrailRenderer:
   serializedVersion: 3

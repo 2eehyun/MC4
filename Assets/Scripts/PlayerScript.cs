@@ -70,12 +70,19 @@ public class PlayerScript : LivingEntity, IPunObservable
                 gunController.OnTriggerHold();
             }
             // 여기는 어떻게해야함 ? 그냥 rotation 정보 주기 ?
-            PV.RPC("SyncRotation", RpcTarget.Others, transform.rotation);
+            PV.RPC("SyncRotation", RpcTarget.All, transform.rotation);
         }
 
         // IsMine이 아닌 것들은 부드럽게 위치 동기화
         else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
         else transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
+    }
+    
+    [PunRPC]
+    void SyncRotation(Quaternion rotation)
+    {
+        // 회전 정보를 수신하여 자신의 플레이어에 적용합니다.
+        transform.rotation = rotation;
     }
 
     [PunRPC]

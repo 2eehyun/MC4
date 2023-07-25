@@ -36,11 +36,6 @@ public class Player : LivingEntity, IPunObservable
         // 닉네임
         NickNameText.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
         NickNameText.color = PV.IsMine ? Color.green : Color.red;
-
-        if (PV.IsMine)
-        {
-            // 위의 것 대신 3D 카메라 위치 변경해야함
-        }
     }
 
     void Update()

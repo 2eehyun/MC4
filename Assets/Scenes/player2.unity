@@ -225,6 +225,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 0}
   - {fileID: 0}
+  canvasParent: {fileID: 2052815000}
 --- !u!1 &420634467
 GameObject:
   m_ObjectHideFlags: 0

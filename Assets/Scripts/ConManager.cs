@@ -13,6 +13,7 @@ public class ConManager : MonoBehaviourPunCallbacks
     public Button connectBtn;
 
     public Transform[] spawnPoints;
+    public GameObject canvasParent;
 
     void Awake()
     {
@@ -51,24 +52,30 @@ public class ConManager : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom() => print("룸 생성 완료");
 
-    public override void OnJoinedRoom() => print("룸 접속 완료");
+    public override void OnJoinedRoom()
+    {
+        print("룸 접속 완료");
+        if (PhotonNetwork.IsMasterClient) {GameObject player = PhotonNetwork.Instantiate("Player", spawnPoints[0].position, Quaternion.identity);}
+        else {GameObject player = PhotonNetwork.Instantiate("Player", spawnPoints[1].position, Quaternion.identity);}
+        canvasParent.SetActive(false);
+    }
 
     public override void OnCreateRoomFailed(short returnCode, string message) => print("방만들기실패");
 
     public override void OnJoinRoomFailed(short returnCode, string message) => print("방참가실패");
 
-    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
-    {
-        print("플레이어 입장: " + newPlayer.NickName);
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
-        {
-            if (PhotonNetwork.IsMasterClient) // 방장만 처리하도록 변경
-            {
-                GameObject player1 = PhotonNetwork.Instantiate("Player", spawnPoints[0].position, Quaternion.identity);
-                GameObject player2 = PhotonNetwork.Instantiate("Player", spawnPoints[1].position, Quaternion.identity);
-            }
-        }
-    }
+    // public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    // {
+    //     print("플레이어 입장: " + newPlayer.NickName);
+    //     if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+    //     {
+    //         if (PhotonNetwork.IsMasterClient) // 방장만 처리하도록 변경
+    //         {
+    //             GameObject player1 = PhotonNetwork.Instantiate("Player", spawnPoints[0].position, Quaternion.identity);
+    //             GameObject player2 = PhotonNetwork.Instantiate("Player", spawnPoints[1].position, Quaternion.identity);
+    //         }
+    //     }
+    // }
 
     [ContextMenu("정보")]
     void Info()

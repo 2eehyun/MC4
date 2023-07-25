@@ -88,5 +88,6 @@ public class Gun : MonoBehaviourPunCallbacks
     public void OnTriggerRelease()
     {
         triggerReleasedSinceLastShot = true;
+        shotsRemainingInBurst = burstCount;
     }
 }

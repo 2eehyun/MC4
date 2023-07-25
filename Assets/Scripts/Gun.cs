@@ -31,6 +31,21 @@ public class Gun : MonoBehaviour
     {
         if (Time.time > nextShotTime)
         {
+            if (fireMode == FireMode.Burst)
+            {
+                if (shotsRemainingInBurst == 0)
+                {
+                    return;
+                }
+                shotsRemainingInBurst--;
+            } else if (fireMode == FireMode.Single)
+            {
+                if (!triggerReleasedSinceLastShot)
+                {
+                    return;
+                }
+            }
+
             nextShotTime = Time.time + msBetweenShots / 1000;
             Projectile newProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation);
             newProjectile.SetSpeed(muzzleVelocity);

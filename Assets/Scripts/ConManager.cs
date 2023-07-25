@@ -65,12 +65,11 @@ public class ConManager : MonoBehaviourPunCallbacks
             if (PhotonNetwork.IsMasterClient) // 방장만 처리하도록 변경
             {
                 PhotonNetwork.LoadLevel("player2");
-
+                // 첫 번째 플레이어 생성
                 GameObject player1 = PhotonNetwork.Instantiate("Player", spawnPoints[0].position, Quaternion.identity);
 
                 GameObject player2 = PhotonNetwork.Instantiate("Player", spawnPoints[1].position, Quaternion.identity);
             }
-            
         }
     }
 

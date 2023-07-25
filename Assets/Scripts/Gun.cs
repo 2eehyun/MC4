@@ -54,7 +54,7 @@ public class Gun : MonoBehaviourPunCallbacks
                     return;
                 }
             }
-            print("shooooooot!");
+            // print("shooooooot!");
 
             nextShotTime = Time.time + msBetweenShots / 1000;
             GameObject newProjectile = PhotonNetwork.Instantiate(projectilePrefab.name, muzzle.position, muzzle.rotation);
@@ -81,7 +81,7 @@ public class Gun : MonoBehaviourPunCallbacks
     [PunRPC]
     public void OnTriggerHold()
     {
-        print("제발");
+        // print("제발");
         Shoot();
         triggerReleasedSinceLastShot = false;
     }

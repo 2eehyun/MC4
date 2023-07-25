@@ -60,7 +60,7 @@ public class Player : LivingEntity, IPunObservable
             // Weapon input
             if (Input.GetMouseButton(0))
             {
-                print("요기요");
+                // print("요기요");
                 gunController.OnTriggerHold();
             }
             if (Input.GetMouseButtonUp(0))

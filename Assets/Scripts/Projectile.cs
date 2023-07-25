@@ -17,14 +17,15 @@ public class Projectile : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        Destroy(gameObject, lifeTime);
-
-        Collider[] initialCollisions = Physics.OverlapSphere(transform.position, .1f, collisionMask);
-        if (initialCollisions.Length > 0)
+        if (PV.IsMine)
         {
-            OnHitObject(initialCollisions[0], transform.position);
+            Destroy(gameObject, lifeTime);
+            Collider[] initialCollisions = Physics.OverlapSphere(transform.position, .1f, collisionMask);
+            if (initialCollisions.Length > 0)
+            {
+                OnHitObject(initialCollisions[0], transform.position);
+            }
         }
-        GetComponent<TrailRenderer>().material.SetColor("_TintColor", trailColour);
     }
 
     public void SetSpeed(float newSpeed)
@@ -34,12 +35,10 @@ public class Projectile : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (PV.IsMine) // PhotonView가 자신의 것일 때에만 움직임 처리
-        {
-            float moveDistance = speed * Time.deltaTime;
-            CheckCollisions(moveDistance);
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
-        }
+        if (!PV.IsMine) return; // PhotonView가 자신의 것이 아닐 때 움직임 중지
+        float moveDistance = speed * Time.deltaTime;
+        CheckCollisions(moveDistance);
+        transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
     void CheckCollisions(float moveDistance)

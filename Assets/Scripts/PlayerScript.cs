@@ -79,13 +79,6 @@ public class PlayerScript : LivingEntity, IPunObservable
     }
 
     [PunRPC]
-    void SetPlayerPosition(Vector3 position)
-    {
-        // 플레이어 위치 설정 함수 (PlayerScript에서 구현)
-        transform.position = position;
-    }
-
-    [PunRPC]
     void DestroyRPC() => Destroy(gameObject);
     
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

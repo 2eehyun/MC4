@@ -24,6 +24,7 @@ public class ConManager : MonoBehaviourPunCallbacks
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
+        spawnPoints = new Transform[2]; // 배열 초기화
         spawnPoints[0] = new GameObject().transform;
         spawnPoints[0].position = new Vector3(0, 1, 2);
         spawnPoints[1] = new GameObject().transform;
@@ -64,12 +65,10 @@ public class ConManager : MonoBehaviourPunCallbacks
             {
                 // 첫 번째 플레이어 생성
                 GameObject player1 = PhotonNetwork.Instantiate("Player", spawnPoints[0].position, Quaternion.identity);
-                player1.GetComponent<PlayerScript>().PV.RPC("SetPlayerPosition", RpcTarget.AllBuffered, spawnPoints[0].position);
 
                 // 두 번째 플레이어 생성
                 GameObject player2 = PhotonNetwork.Instantiate("Player", spawnPoints[1].position, Quaternion.identity);
-                player2.GetComponent<PlayerScript>().PV.RPC("SetPlayerPosition", RpcTarget.AllBuffered, spawnPoints[1].position);
-
+                
                 PhotonNetwork.LoadLevel("player2");
             }
         }

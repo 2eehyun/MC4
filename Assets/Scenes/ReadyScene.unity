@@ -290,6 +290,9 @@ MonoBehaviour:
   ConnectionStatus: {fileID: 1140958446}
   IDtext: {fileID: 735398126}
   connectBtn: {fileID: 1371109415}
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

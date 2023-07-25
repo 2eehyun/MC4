@@ -329,8 +329,8 @@ GameObject:
   - component: {fileID: 2051264187593311055}
   - component: {fileID: 4346186109169374752}
   - component: {fileID: 6257139674256491269}
-  - component: {fileID: 65804472212873672}
   - component: {fileID: 1880829280730726506}
+  - component: {fileID: 3195431536099496168}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -500,28 +500,11 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 65804472212873672}
   - {fileID: 1880829280730726506}
+  - {fileID: 3195431536099496168}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &65804472212873672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5005767479707552128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eba2f976d5812954d9f244909698c809, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 10
-  moveSpeed: 5
-  PV: {fileID: 6257139674256491269}
-  NickNameText: {fileID: 6974616000881568032}
-  HealthImage: {fileID: 2826981011128293327}
 --- !u!114 &1880829280730726506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,6 +521,23 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &3195431536099496168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5005767479707552128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbcc85ea648d2b14d93d55a1f4e378d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 10
+  moveSpeed: 5
+  PV: {fileID: 6257139674256491269}
+  NickNameText: {fileID: 6974616000881568032}
+  HealthImage: {fileID: 2826981011128293327}
 --- !u!1 &6614720390681410535
 GameObject:
   m_ObjectHideFlags: 0

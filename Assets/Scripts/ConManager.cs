@@ -19,6 +19,7 @@ public class ConManager : MonoBehaviourPunCallbacks
         Screen.SetResolution(960, 540, false);
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 30;
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
     
     void Start()
@@ -26,9 +27,9 @@ public class ConManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
         spawnPoints = new Transform[2]; // 배열 초기화
         spawnPoints[0] = new GameObject().transform;
-        spawnPoints[0].position = new Vector3(0, 1, 2);
+        spawnPoints[0].position = new Vector3(0, 10, 2);
         spawnPoints[1] = new GameObject().transform;
-        spawnPoints[1].position = new Vector3(0, 1, -2);
+        spawnPoints[1].position = new Vector3(0, 10, -2);
     }
 
     void Update()
@@ -63,14 +64,13 @@ public class ConManager : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.IsMasterClient) // 방장만 처리하도록 변경
             {
-                // 첫 번째 플레이어 생성
+                PhotonNetwork.LoadLevel("player2");
+
                 GameObject player1 = PhotonNetwork.Instantiate("Player", spawnPoints[0].position, Quaternion.identity);
 
-                // 두 번째 플레이어 생성
                 GameObject player2 = PhotonNetwork.Instantiate("Player", spawnPoints[1].position, Quaternion.identity);
-                
-                PhotonNetwork.LoadLevel("player2");
             }
+            
         }
     }
 

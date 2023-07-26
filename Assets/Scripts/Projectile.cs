@@ -11,8 +11,8 @@ public class Projectile : MonoBehaviourPunCallbacks
     public LayerMask collisionMask;
     public Color trailColour;
     public Image HealthImage;
-    float speed = 10;
-    float damage = 1;
+    public float speed = 10;
+    public float damage = 1;
 
     float lifeTime = 3;
     float skinWidth = .1f;

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 3226976741524937376}
   - component: {fileID: 7372439064940583671}
   - component: {fileID: -3229302100413505604}
+  - component: {fileID: 2306201387833625373}
+  - component: {fileID: 3142771870286215205}
   m_Layer: 8
   m_Name: Obstacle
   m_TagString: Untagged
@@ -122,3 +124,40 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &2306201387833625373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6608329939085932787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb5b79d5f2d0814495ca2e57399fc81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 5
+  PV: {fileID: 3142771870286215205}
+  machineGun: {fileID: 1196837977170057476, guid: 72a5f1cc311335246a59e6f5a3b404b4, type: 3}
+--- !u!114 &3142771870286215205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6608329939085932787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

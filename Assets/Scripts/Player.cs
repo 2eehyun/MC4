@@ -13,7 +13,7 @@ public class Player : LivingEntity, IPunObservable
 {
     public float moveSpeed = 5;
 
-    public Crosshairs crosshairs;
+    // public GameObject crosshairs;
 
     public PhotonView PV;
     public TextMeshProUGUI NickNameText;
@@ -58,8 +58,8 @@ public class Player : LivingEntity, IPunObservable
                 Vector3 point = ray.GetPoint(rayDistance);
                 // Debug.DrawLine(ray.origin, point, Color.red);
                 controller.LookAt(point);
-                crosshairs.transform.position = point;
-                crosshairs.DetectTargets(ray);
+                // crosshairs.transform.position = point;
+                // crosshairs.DetectTargets(ray);
             }
 
             // Weapon input

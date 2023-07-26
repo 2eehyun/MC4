@@ -90,9 +90,13 @@ public class Projectile : MonoBehaviourPunCallbacks
             PV.RPC("ApplyDamageToTarget", RpcTarget.All, c.gameObject.GetPhotonView().ViewID, damage, hitPoint, transform.forward);
             DestroyRPC();
         }
-        else
+        else if (c.gameObject.CompareTag("Obstacle"))
         {
-            // print("아프겠다?");
+            IDamageable obstacleObject = c.GetComponent<IDamageable>();
+            if (obstacleObject != null)
+            {
+                obstacleObject.TakeHit(damage, hitPoint, transform.forward);
+            }
             DestroyRPC();
         }
     }

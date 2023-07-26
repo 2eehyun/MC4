@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 public class Projectile : MonoBehaviourPunCallbacks
 {
     public PhotonView PV; // PhotonView 컴포넌트 추가
     public LayerMask collisionMask;
     public Color trailColour;
+    public Image HealthImage;
     float speed = 10;
     float damage = 1;
 
@@ -72,30 +74,28 @@ public class Projectile : MonoBehaviourPunCallbacks
     }
 
     void OnHitObject(Collider c, Vector3 hitPoint)
-{
-    if (c.gameObject.CompareTag("Enemy"))
     {
-        print("아프겠다e");
-        IDamageable enemyObject = c.GetComponent<IDamageable>();
-        if (enemyObject != null)
+        if (c.gameObject.CompareTag("Enemy"))
         {
-            enemyObject.TakeHit(damage, hitPoint, transform.forward);
-        }
-        DestroyRPC();
-    }
-    else if (c.gameObject.CompareTag("Player"))
-    {
-        print("아프겠다p");
-            PV.RPC("ApplyDamageToTarget", RpcTarget.All, c.gameObject.GetPhotonView().ViewID, damage, hitPoint, transform.forward);
-            // PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
+            // print("아프겠다e");
+            IDamageable enemyObject = c.GetComponent<IDamageable>();
+            if (enemyObject != null)
+            {
+                enemyObject.TakeHit(damage, hitPoint, transform.forward);
+            }
             DestroyRPC();
+        }
+        else if (c.gameObject.CompareTag("Player"))
+        {
+            PV.RPC("ApplyDamageToTarget", RpcTarget.All, c.gameObject.GetPhotonView().ViewID, damage, hitPoint, transform.forward);
+            DestroyRPC();
+        }
+        else
+        {
+            // print("아프겠다?");
+            DestroyRPC();
+        }
     }
-    else
-    {
-        print("아프겠다?");
-        DestroyRPC();
-    }
-}
 
 
     [PunRPC]

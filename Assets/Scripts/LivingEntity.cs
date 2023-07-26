@@ -41,4 +41,6 @@ public class LivingEntity : MonoBehaviourPunCallbacks, IDamageable
         }
         GameObject.Destroy(gameObject);
     }
+
+    // vo
 }

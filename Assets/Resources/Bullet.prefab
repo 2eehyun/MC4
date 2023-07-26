@@ -257,6 +257,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1344
   trailColour: {r: 1, g: 1, b: 1, a: 1}
+  HealthImage: {fileID: 0}
 --- !u!114 &6784260300245594345
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -73,6 +73,8 @@ public class Player : LivingEntity, IPunObservable
                 gunController.OnTriggerRelease();
             }
 
+            HealthImage.fillAmount = health / startingHealth;
+
             // 여기는 어떻게해야함 ? 그냥 rotation 정보 주기 ?
             // PV.RPC("SyncRotation", RpcTarget.All, transform.rotation);
         }

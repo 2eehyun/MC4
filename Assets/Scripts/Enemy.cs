@@ -9,7 +9,7 @@ using Photon.Realtime;
 [RequireComponent(typeof(PhotonTransformView))]
 public class Enemy : LivingEntity
 {
-    public enum State { Idle, Chasing, Attacking};
+    public enum State { Idle, Chasing, Attacking };
     State currentState;
 
     public PhotonView PV;
@@ -32,6 +32,9 @@ public class Enemy : LivingEntity
 
     bool hasTarget;
 
+    // 플레이어들의 리스트
+    List<Transform> players;
+
     protected override void Start()
     {
         base.Start();
@@ -39,11 +42,19 @@ public class Enemy : LivingEntity
         skinMaterial = GetComponent<Renderer>().material;
         originalColour = skinMaterial.color;
 
-        if (GameObject.FindGameObjectWithTag("Player") != null)
+        // 모든 플레이어를 찾아서 리스트에 추가
+        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        players = new List<Transform>();
+        foreach (GameObject playerObject in playerObjects)
+        {
+            players.Add(playerObject.transform);
+        }
+
+        if (players.Count > 0)
         {
             currentState = State.Chasing;
             hasTarget = true;
-            target = GameObject.FindGameObjectWithTag("Player").transform;
+            target = GetClosestPlayer();
             targetEntity = target.GetComponent<LivingEntity>();
             targetEntity.OnDeath += OnTargetDeath;
 
@@ -75,20 +86,47 @@ public class Enemy : LivingEntity
         hasTarget = false;
         currentState = State.Idle;
     }
+
     void Update()
     {
+        // 플레이어 중 가장 가까운 플레이어를 선택
+        Transform closestPlayer = GetClosestPlayer();
+        if (closestPlayer != null)
+        {
+            target = closestPlayer;
+        }
+
         if (hasTarget)
         {
             if (Time.time > nextAttackTime)
-        {
-            float sqrDstToTarget = (target.position - transform.position).sqrMagnitude;
-            if (sqrDstToTarget < Mathf.Pow(attackDistanceThreshold + myCollisionRadius + targetCollisionRadius, 2))
             {
-                nextAttackTime = Time.time + timeBetweenAttacks;
-                StartCoroutine(Attack());
+                float sqrDstToTarget = (target.position - transform.position).sqrMagnitude;
+                if (sqrDstToTarget < Mathf.Pow(attackDistanceThreshold + myCollisionRadius + targetCollisionRadius, 2))
+                {
+                    nextAttackTime = Time.time + timeBetweenAttacks;
+                    StartCoroutine(Attack());
+                }
             }
         }
+    }
+
+    Transform GetClosestPlayer()
+    {
+        Transform closestPlayer = null;
+        float closestDistance = float.MaxValue;
+
+        // 모든 플레이어들과의 거리를 비교하여 가장 가까운 플레이어를 선택
+        foreach (Transform playerTransform in players)
+        {
+            float distance = Vector3.Distance(transform.position, playerTransform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPlayer = playerTransform;
+            }
         }
+
+        return closestPlayer;
     }
 
     IEnumerator Attack()

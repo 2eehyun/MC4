@@ -118,14 +118,17 @@ public class Enemy : LivingEntity
         // 모든 플레이어들과의 거리를 비교하여 가장 가까운 플레이어를 선택
         foreach (Transform playerTransform in players)
         {
-            float distance = Vector3.Distance(transform.position, playerTransform.position);
-            if (distance < closestDistance)
+            // 플레이어가 파괴되었는지 확인하고 유효한 경우에만 거리를 계산합니다.
+            if (playerTransform != null)
             {
-                closestDistance = distance;
-                closestPlayer = playerTransform;
+                float distance = Vector3.Distance(transform.position, playerTransform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestPlayer = playerTransform;
+                }
             }
         }
-
         return closestPlayer;
     }
 

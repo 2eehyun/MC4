@@ -78,15 +78,16 @@ public class Projectile : MonoBehaviourPunCallbacks
             {
                 enemyObject.TakeHit(damage, hitPoint, transform.forward);
             }
-            GameObject.Destroy(gameObject);
+            DestroyRPC();
         }
         else if (c.gameObject.CompareTag("Player"))
         {
             PV.RPC("ApplyDamageToTarget", RpcTarget.All, c.gameObject.GetPhotonView().ViewID, damage, hitPoint, transform.forward);
-            PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
+            // PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
+            DestroyRPC();
         } else
         {
-            GameObject.Destroy(gameObject);
+            DestroyRPC();
         }
     }
 

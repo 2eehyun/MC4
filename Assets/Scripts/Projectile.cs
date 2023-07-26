@@ -70,25 +70,40 @@ public class Projectile : MonoBehaviourPunCallbacks
     }
 
     void OnHitObject(Collider c, Vector3 hitPoint)
+{
+    if (c.gameObject.CompareTag("Enemy"))
     {
-        if (c.gameObject.CompareTag("Enemy"))
+        IDamageable enemyObject = c.GetComponent<IDamageable>();
+        if (enemyObject != null)
         {
-            IDamageable enemyObject = c.GetComponent<IDamageable>();
-            if (enemyObject != null)
-            {
-                enemyObject.TakeHit(damage, hitPoint, transform.forward);
-            }
-            GameObject.Destroy(gameObject);
+            enemyObject.TakeHit(damage, hitPoint, transform.forward);
         }
-        else if (c.gameObject.CompareTag("Player"))
+
+        // 클라이언트가 소유자이거나 MasterClient일 때만 RPC 호출
+        if (PV.IsMine || PhotonNetwork.IsMasterClient)
+        {
+            PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
+        }
+    }
+    else if (c.gameObject.CompareTag("Player"))
+    {
+        // 클라이언트가 소유자이거나 MasterClient일 때만 RPC 호출
+        if (PV.IsMine || PhotonNetwork.IsMasterClient)
         {
             PV.RPC("ApplyDamageToTarget", RpcTarget.All, c.gameObject.GetPhotonView().ViewID, damage, hitPoint, transform.forward);
             PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
-        } else
-        {
-            GameObject.Destroy(gameObject);
         }
     }
+    else
+    {
+        // 클라이언트가 소유자이거나 MasterClient일 때만 RPC 호출
+        if (PV.IsMine || PhotonNetwork.IsMasterClient)
+        {
+            PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
+        }
+    }
+}
+
 
     [PunRPC]
     void DestroyRPC()

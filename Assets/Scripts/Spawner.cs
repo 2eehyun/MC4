@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class Spawner : MonoBehaviour
 {
@@ -85,8 +87,11 @@ public class Spawner : MonoBehaviour
             yield return null;
         }
 
-        Enemy spawnedEnemy = Instantiate(enemy, spawnTile.position + Vector3.up, Quaternion.identity) as Enemy;
-        spawnedEnemy.OnDeath += OnEnemyDeath;
+        GameObject spawnedEnemy = PhotonNetwork.Instantiate("Enemy", spawnTile.position + Vector3.up, Quaternion.identity);
+        Enemy enemyComponent = spawnedEnemy.GetComponent<Enemy>();
+        enemyComponent.OnDeath += OnEnemyDeath;
+
+        yield return null;
     }
 
     void OnPlayerDeath()

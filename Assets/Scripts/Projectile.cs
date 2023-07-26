@@ -37,6 +37,7 @@ public class Projectile : MonoBehaviourPunCallbacks
     {
         if (PV.IsMine)
         {
+            // print("test1");
             float moveDistance = speed * Time.deltaTime;
             CheckCollisions(moveDistance);
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
@@ -50,6 +51,7 @@ public class Projectile : MonoBehaviourPunCallbacks
 
         if (Physics.Raycast(ray, out hit, moveDistance + skinWidth, collisionMask, QueryTriggerInteraction.Collide))
         {
+            // print("제발");
             OnHitObject(hit.collider, hit.point);
         }
     }
@@ -73,6 +75,7 @@ public class Projectile : MonoBehaviourPunCallbacks
 {
     if (c.gameObject.CompareTag("Enemy"))
     {
+        print("아프겠다e");
         IDamageable enemyObject = c.GetComponent<IDamageable>();
         if (enemyObject != null)
         {
@@ -82,12 +85,14 @@ public class Projectile : MonoBehaviourPunCallbacks
     }
     else if (c.gameObject.CompareTag("Player"))
     {
+        print("아프겠다p");
             PV.RPC("ApplyDamageToTarget", RpcTarget.All, c.gameObject.GetPhotonView().ViewID, damage, hitPoint, transform.forward);
             // PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
             DestroyRPC();
     }
     else
     {
+        print("아프겠다?");
         DestroyRPC();
     }
 }

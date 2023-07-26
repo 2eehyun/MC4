@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
+using Photon.Realtime;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : LivingEntity
@@ -9,6 +11,7 @@ public class Enemy : LivingEntity
     public enum State { Idle, Chasing, Attacking};
     State currentState;
 
+    public PhotonView PV;
     public ParticleSystem deathEffect;
 
     NavMeshAgent pathfinder;
@@ -52,6 +55,13 @@ public class Enemy : LivingEntity
 
     public override void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
     {
+        PV.RPC("TakeHitRPC", RpcTarget.All, damage, hitPoint, hitDirection);
+    }
+
+    [PunRPC]
+    void TakeHitRPC(float damage, Vector3 hitPoint, Vector3 hitDirection)
+    {
+        // 실제로 적이 피해를 입는 동작을 수행합니다.
         if (damage >= health)
         {
             Destroy(Instantiate(deathEffect, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)), deathEffect.main.startLifetime.constant);

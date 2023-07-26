@@ -59,7 +59,7 @@ public class Spawner : MonoBehaviour
                 enemiesRemainingToSpawn--;
                 nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
 
-                StartCoroutine(SpawnEnemy());
+                if (PhotonNetwork.IsMasterClient) {StartCoroutine(SpawnEnemy());}
             }
         }
     }

@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(PhotonTransformView))]
 public class Enemy : LivingEntity
 {
     public enum State { Idle, Chasing, Attacking};

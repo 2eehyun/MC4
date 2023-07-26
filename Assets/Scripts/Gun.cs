@@ -7,7 +7,6 @@ using Photon.Realtime;
 public class Gun : MonoBehaviourPunCallbacks
 {
     public PhotonView PV;
-    int dir;
 
     public enum FireMode { Auto, Burst, Single };
     public FireMode fireMode;
@@ -34,7 +33,7 @@ public class Gun : MonoBehaviourPunCallbacks
 
     float nextShotTime;
 
-    [PunRPC]
+    // [PunRPC]
     public void Shoot()
     {
         if (Time.time > nextShotTime)
@@ -59,29 +58,15 @@ public class Gun : MonoBehaviourPunCallbacks
             nextShotTime = Time.time + msBetweenShots / 1000;
             GameObject newProjectile = PhotonNetwork.Instantiate(projectilePrefab.name, muzzle.position, muzzle.rotation);
             newProjectile.GetComponent<Projectile>().SetSpeed(muzzleVelocity);
-
             PhotonNetwork.Instantiate(shellPrefab.name, shellEjection.position, shellEjection.rotation);
             muzzleflash.Activate();
-
-            // 다른 클라이언트에도 총알이 보이도록 RPC 호출
-            PV.RPC("OnShoot", RpcTarget.Others);
         }
     }
 
-    [PunRPC]
-    public void OnShoot()
-    {
-        // 다른 클라이언트에서도 총알 생성과 효과 발동
-        GameObject newProjectile = Instantiate(projectilePrefab, muzzle.position, muzzle.rotation);
-        newProjectile.GetComponent<Projectile>().SetSpeed(muzzleVelocity);
-        Instantiate(shellPrefab, shellEjection.position, shellEjection.rotation);
-        muzzleflash.Activate();
-    }
-
-    [PunRPC]
+    // [PunRPC]
     public void OnTriggerHold()
     {
-        // print("제발");
+        // PV.RPC("Shoot", RpcTarget.All);
         Shoot();
         triggerReleasedSinceLastShot = false;
     }
@@ -92,3 +77,5 @@ public class Gun : MonoBehaviourPunCallbacks
         shotsRemainingInBurst = burstCount;
     }
 }
+
+

@@ -14,6 +14,7 @@ public class Projectile : MonoBehaviourPunCallbacks
 
     float lifeTime = 3;
     float skinWidth = .1f;
+    Vector3 curPos;
 
     private void Start()
     {
@@ -35,10 +36,14 @@ public class Projectile : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (!PV.IsMine) return; // PhotonView가 자신의 것이 아닐 때 움직임 중지
-        float moveDistance = speed * Time.deltaTime;
-        CheckCollisions(moveDistance);
-        transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        if (PV.IsMine)
+        {
+            float moveDistance = speed * Time.deltaTime;
+            CheckCollisions(moveDistance);
+            transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        }
+        else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
+        else transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
     }
 
     void CheckCollisions(float moveDistance)
@@ -53,8 +58,9 @@ public class Projectile : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void ApplyDamageToTarget(int viewID, float damage, Vector3 hitPoint, Vector3 hitDirection)
+    void ApplyDamageToTarget(int viewID, float damage, Vector3 hitPoint, Vector3 hitDirection, Collider c)
     {
+        
         PhotonView targetPV = PhotonView.Find(viewID);
         if (targetPV && targetPV.gameObject != null)
         {
@@ -68,7 +74,40 @@ public class Projectile : MonoBehaviourPunCallbacks
 
     void OnHitObject(Collider c, Vector3 hitPoint)
     {
-        PV.RPC("ApplyDamageToTarget", RpcTarget.All, c.gameObject.GetPhotonView().ViewID, damage, hitPoint, transform.forward);
-        GameObject.Destroy(gameObject);
+        if (c.gameObject.CompareTag("Enemy"))
+        {
+            IDamageable enemyObject = c.GetComponent<IDamageable>();
+            if (enemyObject != null)
+            {
+                enemyObject.TakeHit(damage, hitPoint, transform.forward);
+            }
+            GameObject.Destroy(gameObject);
+        }
+        else if (c.gameObject.CompareTag("Player"))
+        {
+            PV.RPC("ApplyDamageToTarget", RpcTarget.All, c.gameObject.GetPhotonView().ViewID, damage, hitPoint, transform.forward, c);
+            PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
+        } else
+        {
+            GameObject.Destroy(gameObject);
+        }
+    }
+
+    [PunRPC]
+    void DestroyRPC()
+    {
+        PhotonNetwork.Destroy(gameObject);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+        }
+        else
+        {
+            curPos = (Vector3)stream.ReceiveNext();
+        }
     }
 }

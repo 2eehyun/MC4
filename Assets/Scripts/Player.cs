@@ -69,7 +69,7 @@ public class Player : LivingEntity, IPunObservable
             }
 
             // 여기는 어떻게해야함 ? 그냥 rotation 정보 주기 ?
-            PV.RPC("SyncRotation", RpcTarget.All, transform.rotation);
+            // PV.RPC("SyncRotation", RpcTarget.All, transform.rotation);
         }
 
         // IsMine이 아닌 것들은 부드럽게 위치 동기화

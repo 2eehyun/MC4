@@ -14,7 +14,6 @@ public class Projectile : MonoBehaviourPunCallbacks
 
     float lifeTime = 3;
     float skinWidth = .1f;
-    Vector3 curPos;
 
     private void Start()
     {
@@ -42,8 +41,6 @@ public class Projectile : MonoBehaviourPunCallbacks
             CheckCollisions(moveDistance);
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
         }
-        else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
-        else transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
     }
 
     void CheckCollisions(float moveDistance)
@@ -97,17 +94,5 @@ public class Projectile : MonoBehaviourPunCallbacks
     void DestroyRPC()
     {
         PhotonNetwork.Destroy(gameObject);
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(transform.position);
-        }
-        else
-        {
-            curPos = (Vector3)stream.ReceiveNext();
-        }
     }
 }

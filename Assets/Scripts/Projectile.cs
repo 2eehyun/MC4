@@ -11,8 +11,13 @@ public class Projectile : MonoBehaviourPunCallbacks
     public LayerMask collisionMask;
     public Color trailColour;
     public Image HealthImage;
+<<<<<<< HEAD
+    public float speed = 10;
+    public float damage = 1;
+=======
     float speed = 10;
     float damage = 1;
+>>>>>>> parent of c6aa6e6 (욕과심1)
 
     float lifeTime = 3;
     float skinWidth = .1f;

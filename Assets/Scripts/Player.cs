@@ -84,8 +84,8 @@ public class Player : LivingEntity, IPunObservable
         transform.rotation = rotation;
     }
 
-    [PunRPC]
-    void DestroyRPC() => Destroy(gameObject);
+    // [PunRPC]
+    // void DestroyRPC() => Destroy(gameObject);
     
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {

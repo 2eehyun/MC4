@@ -14,6 +14,7 @@ public class Projectile : MonoBehaviourPunCallbacks
 
     float lifeTime = 3;
     float skinWidth = .1f;
+    Vector3 curPos;
 
     Vector3 curPos;
 

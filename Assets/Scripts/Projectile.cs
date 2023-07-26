@@ -57,7 +57,7 @@ public class Projectile : MonoBehaviourPunCallbacks
     [PunRPC]
     void ApplyDamageToTarget(int viewID, float damage, Vector3 hitPoint, Vector3 hitDirection)
     {
-        
+        Debug.Log("맞았어요");
         PhotonView targetPV = PhotonView.Find(viewID);
         if (targetPV && targetPV.gameObject != null)
         {

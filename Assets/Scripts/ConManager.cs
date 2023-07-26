@@ -15,6 +15,8 @@ public class ConManager : MonoBehaviourPunCallbacks
     public Transform[] spawnPoints;
     public GameObject canvasParent;
 
+    public GameObject spawner;
+
     void Awake()
     {
         Screen.SetResolution(960, 540, false);
@@ -58,6 +60,7 @@ public class ConManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient) {GameObject player = PhotonNetwork.Instantiate("Player", spawnPoints[0].position, Quaternion.identity);}
         else {GameObject player = PhotonNetwork.Instantiate("Player", spawnPoints[1].position, Quaternion.identity);}
         canvasParent.SetActive(false);
+        spawner.SetActive(true);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message) => print("방만들기실패");

@@ -60,6 +60,8 @@ public class ConManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             GameObject player = PhotonNetwork.Instantiate("Player", spawnPoints[0].position, Quaternion.identity);
+            Renderer playerRenderer = player.GetComponent<Renderer>();
+            playerRenderer.material.color = Color.blue;
         }
         else 
         {

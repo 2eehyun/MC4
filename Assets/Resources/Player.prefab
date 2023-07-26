@@ -535,6 +535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 10
   moveSpeed: 5
+  crosshairs: {fileID: 2480837123101302246, guid: 49058991cdb4a1a479a1acc7db29670d, type: 3}
   PV: {fileID: 6257139674256491269}
   NickNameText: {fileID: 6974616000881568032}
   HealthImage: {fileID: 2826981011128293327}

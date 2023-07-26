@@ -12,6 +12,9 @@ using TMPro;
 public class Player : LivingEntity, IPunObservable
 {
     public float moveSpeed = 5;
+
+    public Crosshairs crosshairs;
+
     public PhotonView PV;
     public TextMeshProUGUI NickNameText;
     public Image HealthImage;
@@ -47,7 +50,7 @@ public class Player : LivingEntity, IPunObservable
 
             // Look input
             Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
-            Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+            Plane groundPlane = new Plane(Vector3.up, Vector3.up * gunController.GunHeight);
             float rayDistance;
 
             if (groundPlane.Raycast(ray, out rayDistance))
@@ -55,6 +58,8 @@ public class Player : LivingEntity, IPunObservable
                 Vector3 point = ray.GetPoint(rayDistance);
                 // Debug.DrawLine(ray.origin, point, Color.red);
                 controller.LookAt(point);
+                crosshairs.transform.position = point;
+                crosshairs.DetectTargets(ray);
             }
 
             // Weapon input

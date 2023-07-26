@@ -55,7 +55,7 @@ public class Projectile : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void ApplyDamageToTarget(int viewID, float damage, Vector3 hitPoint, Vector3 hitDirection, Collider c)
+    void ApplyDamageToTarget(int viewID, float damage, Vector3 hitPoint, Vector3 hitDirection)
     {
         
         PhotonView targetPV = PhotonView.Find(viewID);
@@ -82,7 +82,7 @@ public class Projectile : MonoBehaviourPunCallbacks
         }
         else if (c.gameObject.CompareTag("Player"))
         {
-            PV.RPC("ApplyDamageToTarget", RpcTarget.All, c.gameObject.GetPhotonView().ViewID, damage, hitPoint, transform.forward, c);
+            PV.RPC("ApplyDamageToTarget", RpcTarget.All, c.gameObject.GetPhotonView().ViewID, damage, hitPoint, transform.forward);
             PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
         } else
         {

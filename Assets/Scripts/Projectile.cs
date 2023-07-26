@@ -78,29 +78,17 @@ public class Projectile : MonoBehaviourPunCallbacks
         {
             enemyObject.TakeHit(damage, hitPoint, transform.forward);
         }
-
-        // 클라이언트가 소유자이거나 MasterClient일 때만 RPC 호출
-        if (PV.IsMine || PhotonNetwork.IsMasterClient)
-        {
-            PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
-        }
+        DestroyRPC();
     }
     else if (c.gameObject.CompareTag("Player"))
     {
-        // 클라이언트가 소유자이거나 MasterClient일 때만 RPC 호출
-        if (PV.IsMine || PhotonNetwork.IsMasterClient)
-        {
             PV.RPC("ApplyDamageToTarget", RpcTarget.All, c.gameObject.GetPhotonView().ViewID, damage, hitPoint, transform.forward);
-            PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
-        }
+            // PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
+            DestroyRPC();
     }
     else
     {
-        // 클라이언트가 소유자이거나 MasterClient일 때만 RPC 호출
-        if (PV.IsMine || PhotonNetwork.IsMasterClient)
-        {
-            PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
-        }
+        DestroyRPC();
     }
 }
 

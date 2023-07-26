@@ -57,8 +57,17 @@ public class ConManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         print("룸 접속 완료");
-        if (PhotonNetwork.IsMasterClient) {GameObject player = PhotonNetwork.Instantiate("Player", spawnPoints[0].position, Quaternion.identity);}
-        else {GameObject player = PhotonNetwork.Instantiate("Player", spawnPoints[1].position, Quaternion.identity);}
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameObject player = PhotonNetwork.Instantiate("Player", spawnPoints[0].position, Quaternion.identity);
+        }
+        else 
+        {
+            GameObject player = PhotonNetwork.Instantiate("Player", spawnPoints[1].position, Quaternion.identity);
+            Renderer playerRenderer = player.GetComponent<Renderer>();
+            playerRenderer.material.color = Color.blue;
+
+        }
         canvasParent.SetActive(false);
         spawner.SetActive(true);
     }

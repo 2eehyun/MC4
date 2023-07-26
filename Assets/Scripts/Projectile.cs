@@ -15,8 +15,6 @@ public class Projectile : MonoBehaviourPunCallbacks
     float lifeTime = 3;
     float skinWidth = .1f;
 
-    Vector3 curPos;
-
     private void Start()
     {
         if (PV.IsMine)
@@ -57,9 +55,9 @@ public class Projectile : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void ApplyDamageToTarget(int viewID, float damage, Vector3 hitPoint, Vector3 hitDirection, Collider c)
+    void ApplyDamageToTarget(int viewID, float damage, Vector3 hitPoint, Vector3 hitDirection)
     {
-        
+        Debug.Log("맞았어요");
         PhotonView targetPV = PhotonView.Find(viewID);
         if (targetPV && targetPV.gameObject != null)
         {
@@ -84,7 +82,7 @@ public class Projectile : MonoBehaviourPunCallbacks
         }
         else if (c.gameObject.CompareTag("Player"))
         {
-            PV.RPC("ApplyDamageToTarget", RpcTarget.All, c.gameObject.GetPhotonView().ViewID, damage, hitPoint, transform.forward, c);
+            PV.RPC("ApplyDamageToTarget", RpcTarget.All, c.gameObject.GetPhotonView().ViewID, damage, hitPoint, transform.forward);
             PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
         } else
         {

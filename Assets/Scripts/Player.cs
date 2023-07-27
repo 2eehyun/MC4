@@ -34,7 +34,10 @@ public class Player : LivingEntity, IPunObservable
         controller = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
         viewCamera = Camera.main;
+        gunController.EquipGun(0);
     }
+
+
 
     void Awake()
     {

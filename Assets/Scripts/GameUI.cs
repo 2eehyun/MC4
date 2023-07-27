@@ -22,6 +22,7 @@ public class GameUI : MonoBehaviour
         // print("test1");
         yield return new WaitForSeconds(10f);
         player = FindObjectOfType<Player>();
+        // print("test2");
 
         if (player != null)
             player.OnDeath += OnPlayerDeath;

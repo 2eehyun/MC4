@@ -14,15 +14,19 @@ public class Player : LivingEntity, IPunObservable
     public float moveSpeed = 5;
 
     // public GameObject crosshairs;
+    // public event System.Action OnDeath;
 
     public PhotonView PV;
     public TextMeshProUGUI NickNameText;
     public Image HealthImage;
+    // public Image fadePlane;
+    // public GameObject gameOverUI;
 
     Camera viewCamera;
     PlayerController controller;
     GunController gunController;
     Vector3 curPos;
+    float damage = 1;
 
     protected override void Start()
     {
@@ -74,9 +78,11 @@ public class Player : LivingEntity, IPunObservable
             }
 
             HealthImage.fillAmount = health / startingHealth;
-
-            // 여기는 어떻게해야함 ? 그냥 rotation 정보 주기 ?
-            // PV.RPC("SyncRotation", RpcTarget.All, transform.rotation);
+            // if (damage >= health)
+            // {
+            //     print("해치웠나?");
+            //     Die();
+            // }   
         }
 
         // IsMine이 아닌 것들은 부드럽게 위치 동기화

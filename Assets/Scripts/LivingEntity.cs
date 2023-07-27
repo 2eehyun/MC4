@@ -32,15 +32,14 @@ public class LivingEntity : MonoBehaviourPunCallbacks, IDamageable
         }
     }
 
+    [ContextMenu("Self Destruct")]
     protected void Die()
     {
         dead = true;
         if (OnDeath != null)
         {
-            OnDeath();
+            OnDeath?.Invoke();
         }
         GameObject.Destroy(gameObject);
     }
-
-    // vo
 }

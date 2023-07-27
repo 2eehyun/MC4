@@ -11,7 +11,7 @@ public class Gun : MonoBehaviourPunCallbacks
     public enum FireMode { Auto, Burst, Single };
     public FireMode fireMode;
 
-    public Transform muzzle;
+    public Transform[] projectileSpawn;
     public GameObject projectilePrefab; // GameObject 타입으로 변경
     public float msBetweenShots = 100;
     public float muzzleVelocity = 35;
@@ -53,11 +53,14 @@ public class Gun : MonoBehaviourPunCallbacks
                     return;
                 }
             }
-            // print("shooooooot!");
+            
+            for (int i = 0; i < projectileSpawn.Length; i++)
+            {
+                nextShotTime = Time.time + msBetweenShots / 1000;
+                GameObject newProjectile = PhotonNetwork.Instantiate(projectilePrefab.name, projectileSpawn[i].position, projectileSpawn[i].rotation);
+                newProjectile.GetComponent<Projectile>().SetSpeed(muzzleVelocity);
+            }
 
-            nextShotTime = Time.time + msBetweenShots / 1000;
-            GameObject newProjectile = PhotonNetwork.Instantiate(projectilePrefab.name, muzzle.position, muzzle.rotation);
-            newProjectile.GetComponent<Projectile>().SetSpeed(muzzleVelocity);
             PhotonNetwork.Instantiate(shellPrefab.name, shellEjection.position, shellEjection.rotation);
             muzzleflash.Activate();
         }

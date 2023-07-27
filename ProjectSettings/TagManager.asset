@@ -8,6 +8,9 @@ TagManager:
   - Enemy
   - Obstacle
   - Gun0
+  - Gun1
+  - Gun2
+  - Gun3
   layers:
   - Default
   - TransparentFX

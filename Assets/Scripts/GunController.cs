@@ -17,6 +17,7 @@ public class GunController : MonoBehaviourPun
     }
     public void EquipGun(Gun gunToEquip)
     {
+        Debug.Log(gunToEquip.name);
         if (equippedGun != null)
         {
             Destroy(equippedGun.gameObject);
@@ -40,17 +41,17 @@ public class GunController : MonoBehaviourPun
         if (other.gameObject.CompareTag("Gun1"))
         {
             EquipGun(1);
-            Destroy(other);
+            Destroy(other.gameObject);
         }
         if (other.gameObject.CompareTag("Gun2"))
         {
             EquipGun(2);
-            Destroy(other);
+            Destroy(other.gameObject);
         }
         if (other.gameObject.CompareTag("Gun3"))
         {
             EquipGun(3);
-            Destroy(other);
+            Destroy(other.gameObject);
         }
     }
 

@@ -481,10 +481,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponHold: {fileID: 675247399857193065}
   allGuns:
+  - {fileID: 1196837977170057476, guid: 77fc81c0b336e2842a31c6e06aaed6fb, type: 3}
+  - {fileID: 1196837977170057476, guid: caba876204552ce4cb5b7cd622fbecf9, type: 3}
   - {fileID: 1196837977170057476, guid: 72a5f1cc311335246a59e6f5a3b404b4, type: 3}
-  - {fileID: 1196837977170057476, guid: 72a5f1cc311335246a59e6f5a3b404b4, type: 3}
-  - {fileID: 1196837977170057476, guid: 72a5f1cc311335246a59e6f5a3b404b4, type: 3}
-  - {fileID: 1196837977170057476, guid: 72a5f1cc311335246a59e6f5a3b404b4, type: 3}
+  - {fileID: 1196837977170057476, guid: caba876204552ce4cb5b7cd622fbecf9, type: 3}
 --- !u!114 &6257139674256491269
 MonoBehaviour:
   m_ObjectHideFlags: 0

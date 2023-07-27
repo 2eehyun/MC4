@@ -85,19 +85,19 @@ public class Enemy : LivingEntity
             Destroy(Instantiate(deathEffect, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)), deathEffect.main.startLifetime.constant);
             if(randNum == 1)
             {
-               Instantiate(gun0, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
+               PhotonNetwork.Instantiate(gun0.name, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
             }
             else if (randNum == 2)
             {
-                Instantiate(gun1, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
+                PhotonNetwork.Instantiate(gun1.name, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
             }
             else if (randNum == 3)
             {
-                Instantiate(gun2, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
+                PhotonNetwork.Instantiate(gun2.name, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
             }
             else if (randNum == 4)
             {
-                Instantiate(gun3, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
+                PhotonNetwork.Instantiate(gun3.name, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
             }
         }
         base.TakeHit(damage, hitPoint, hitDirection);

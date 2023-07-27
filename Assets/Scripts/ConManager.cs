@@ -30,9 +30,9 @@ public class ConManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
         spawnPoints = new Transform[2]; // 배열 초기화
         spawnPoints[0] = new GameObject().transform;
-        spawnPoints[0].position = new Vector3(0, 3, 20);
+        spawnPoints[0].position = new Vector3(10, 3, 10);
         spawnPoints[1] = new GameObject().transform;
-        spawnPoints[1].position = new Vector3(0, 3, -20);
+        spawnPoints[1].position = new Vector3(-10, 3, -10);
     }
 
     void Update()

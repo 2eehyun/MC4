@@ -79,7 +79,7 @@ public class Enemy : LivingEntity
     void TakeHitRPC(float damage, Vector3 hitPoint, Vector3 hitDirection)
     {
         // 실제로 적이 피해를 입는 동작을 수행합니다.
-        int randNum = Random.Range(1, 4);
+        int randNum = Random.Range(1, 8);
         if (damage >= health)
         {
             Destroy(Instantiate(deathEffect, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)), deathEffect.main.startLifetime.constant);

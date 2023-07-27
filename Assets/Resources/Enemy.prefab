@@ -126,10 +126,10 @@ MonoBehaviour:
   startingHealth: 5
   PV: {fileID: -7576420346621674636}
   deathEffect: {fileID: 8771970847921495382, guid: 2777e9b15b50a164eb5804440b0301cd, type: 3}
-  gun0: {fileID: 1196837977170057476, guid: 72a5f1cc311335246a59e6f5a3b404b4, type: 3}
-  gun1: {fileID: 1196837977170057476, guid: 72a5f1cc311335246a59e6f5a3b404b4, type: 3}
+  gun0: {fileID: 1196837977170057476, guid: 77fc81c0b336e2842a31c6e06aaed6fb, type: 3}
+  gun1: {fileID: 1196837977170057476, guid: caba876204552ce4cb5b7cd622fbecf9, type: 3}
   gun2: {fileID: 1196837977170057476, guid: 72a5f1cc311335246a59e6f5a3b404b4, type: 3}
-  gun3: {fileID: 1196837977170057476, guid: 72a5f1cc311335246a59e6f5a3b404b4, type: 3}
+  gun3: {fileID: 1196837977170057476, guid: caba876204552ce4cb5b7cd622fbecf9, type: 3}
 --- !u!195 &7976259838828608337
 NavMeshAgent:
   m_ObjectHideFlags: 0

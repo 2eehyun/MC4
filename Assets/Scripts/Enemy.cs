@@ -35,6 +35,7 @@ public class Enemy : LivingEntity
     public Gun gun0;
     public Gun gun1;
     public Gun gun2;
+    public Gun gun3;
 
     // 플레이어들의 리스트
     List<Transform> players;
@@ -78,21 +79,25 @@ public class Enemy : LivingEntity
     void TakeHitRPC(float damage, Vector3 hitPoint, Vector3 hitDirection)
     {
         // 실제로 적이 피해를 입는 동작을 수행합니다.
-        int randNum = Random.Range(1, 20);
+        int randNum = Random.Range(1, 4);
         if (damage >= health)
         {
             Destroy(Instantiate(deathEffect, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)), deathEffect.main.startLifetime.constant);
             if(randNum == 1)
             {
-                Destroy(Instantiate(gun0, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)), 20f);
+               Instantiate(gun0, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
             }
             else if (randNum == 2)
             {
-                Destroy(Instantiate(gun1, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)), 20f);
+                Instantiate(gun1, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
             }
             else if (randNum == 3)
             {
-                Destroy(Instantiate(gun2, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)), 20f);
+                Instantiate(gun2, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
+            }
+            else if (randNum == 4)
+            {
+                Instantiate(gun3, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
             }
         }
         base.TakeHit(damage, hitPoint, hitDirection);

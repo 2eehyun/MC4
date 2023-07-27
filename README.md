@@ -33,12 +33,13 @@ KAIST 전산학부 19학번 이현수
 <img src = "https://github.com/twinDrarf/MC4/assets/92250113/e1cb2e2d-7bda-4488-b7de-e89f7642d26b" height ="400" weight = "400"/>
 <img src = "https://github.com/twinDrarf/MC4/assets/92250113/4308502f-0bd2-4e11-91d3-06c66a5fd3eb" height ="400" weight = "400"/>
 
-
  - Gun, Guncontorller scirpt를 이용해서 3종류의 총 생성
  - 몬스터가 죽을 때 일정 확률로 총 드롭
  - 총을 주우면 해당 기능을 가진 총으로 무기 변경
 
 
 ## GAME
+<img src = "https://github.com/twinDrarf/MC4/assets/92250113/d93b632b-98a8-4b67-aa05-a8dd11d42ac0" height ="400" weight = "600"/>
 
-
+- Wave 별 몬스터의 생성 개수 및 생성 주기를 조절 가능
+- 본인이 조작하는 플레이어를 파란색 상대방을 빨간색으로 설정

@@ -12,14 +12,23 @@ public class GameUI : MonoBehaviour
 
     void Start()
     {
+        // print("test0");
+        StartCoroutine(WaitForPlayer());
+        // print("test4");
+    }
+
+    IEnumerator WaitForPlayer()
+    {
+        // print("test1");
+        yield return new WaitForSeconds(10f);
         player = FindObjectOfType<Player>();
-        print("test1");
-        player.OnDeath += OnPlayerDeath;
+
+        if (player != null)
+            player.OnDeath += OnPlayerDeath;
     }
 
     void OnPlayerDeath()
     {
-        print("test2");
         StartCoroutine(Fade(Color.clear, Color.black, 1));
         gameOverUI.SetActive(true);
     }

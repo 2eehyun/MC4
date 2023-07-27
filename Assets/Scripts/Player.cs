@@ -26,7 +26,6 @@ public class Player : LivingEntity, IPunObservable
     PlayerController controller;
     GunController gunController;
     Vector3 curPos;
-    float damage = 1;
 
     protected override void Start()
     {
@@ -81,11 +80,6 @@ public class Player : LivingEntity, IPunObservable
             }
 
             HealthImage.fillAmount = health / startingHealth;
-            // if (damage >= health)
-            // {
-            //     print("해치웠나?");
-            //     Die();
-            // }   
         }
 
         // IsMine이 아닌 것들은 부드럽게 위치 동기화

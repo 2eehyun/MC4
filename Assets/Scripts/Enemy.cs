@@ -37,8 +37,7 @@ public class Enemy : LivingEntity
     public Gun gun2;
     public Gun gun3;
 
-    // 플레이어들의 리스트
-    List<Transform> players;
+    List<Transform> players; // player list
 
     protected override void Start()
     {
@@ -47,7 +46,7 @@ public class Enemy : LivingEntity
         skinMaterial = GetComponent<Renderer>().material;
         originalColour = skinMaterial.color;
 
-        // 모든 플레이어를 찾아서 리스트에 추가
+        // All players
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
         players = new List<Transform>();
         foreach (GameObject playerObject in playerObjects)
@@ -74,12 +73,11 @@ public class Enemy : LivingEntity
     {
         PV.RPC("TakeHitRPC", RpcTarget.All, damage, hitPoint, hitDirection);
     }
-
+    
     [PunRPC]
-    void TakeHitRPC(float damage, Vector3 hitPoint, Vector3 hitDirection)
+    void TakeHitRPC(float damage, Vector3 hitPoint, Vector3 hitDirection) // what really happened in TakeHit
     {
-        // 실제로 적이 피해를 입는 동작을 수행합니다.
-        int randNum = Random.Range(1, 8);
+        int randNum = Random.Range(1, 8); // drop weapons
         if (damage >= health)
         {
             Destroy(Instantiate(deathEffect, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)), deathEffect.main.startLifetime.constant);
@@ -111,7 +109,6 @@ public class Enemy : LivingEntity
 
     void Update()
     {
-        // 플레이어 중 가장 가까운 플레이어를 선택
         Transform closestPlayer = GetClosestPlayer();
         if (closestPlayer != null)
         {
@@ -137,11 +134,9 @@ public class Enemy : LivingEntity
         Transform closestPlayer = null;
         float closestDistance = float.MaxValue;
 
-        // 모든 플레이어들과의 거리를 비교하여 가장 가까운 플레이어를 선택
-        foreach (Transform playerTransform in players)
+        foreach (Transform playerTransform in players) // compare dists
         {
-            // 플레이어가 파괴되었는지 확인하고 유효한 경우에만 거리를 계산합니다.
-            if (playerTransform != null)
+            if (playerTransform != null) // if player is alive
             {
                 float distance = Vector3.Distance(transform.position, playerTransform.position);
                 if (distance < closestDistance)

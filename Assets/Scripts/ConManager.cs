@@ -28,7 +28,7 @@ public class ConManager : MonoBehaviourPunCallbacks
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
-        spawnPoints = new Transform[2]; // 배열 초기화
+        spawnPoints = new Transform[2]; // respawn
         spawnPoints[0] = new GameObject().transform;
         spawnPoints[0].position = new Vector3(10, 3, 10);
         spawnPoints[1] = new GameObject().transform;
@@ -48,15 +48,15 @@ public class ConManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        print("서버 접속 완료");
+        print("hshs conncect server");
         connectBtn.interactable = true;
     }
 
-    public override void OnCreatedRoom() => print("룸 생성 완료");
+    public override void OnCreatedRoom() => print("hshs create room");
 
     public override void OnJoinedRoom()
     {
-        print("룸 접속 완료");
+        print("hshs enter room");
         if (PhotonNetwork.IsMasterClient)
         {
             GameObject player = PhotonNetwork.Instantiate("Player", spawnPoints[0].position, Quaternion.identity);
@@ -74,16 +74,16 @@ public class ConManager : MonoBehaviourPunCallbacks
         spawner.SetActive(true);
     }
 
-    public override void OnCreateRoomFailed(short returnCode, string message) => print("방만들기실패");
+    public override void OnCreateRoomFailed(short returnCode, string message) => print("hshs f1");
 
-    public override void OnJoinRoomFailed(short returnCode, string message) => print("방참가실패");
+    public override void OnJoinRoomFailed(short returnCode, string message) => print("hshs f2");
 
     // public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     // {
-    //     print("플레이어 입장: " + newPlayer.NickName);
+    //     print("hs player : " + newPlayer.NickName);
     //     if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
     //     {
-    //         if (PhotonNetwork.IsMasterClient) // 방장만 처리하도록 변경
+    //         if (PhotonNetwork.IsMasterClient) // only master
     //         {
     //             GameObject player1 = PhotonNetwork.Instantiate("Player", spawnPoints[0].position, Quaternion.identity);
     //             GameObject player2 = PhotonNetwork.Instantiate("Player", spawnPoints[1].position, Quaternion.identity);
@@ -96,11 +96,11 @@ public class ConManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
         {
-            print("현재 방 이름 : " + PhotonNetwork.CurrentRoom.Name);
-            print("현재 방 인원 수 : " + PhotonNetwork.CurrentRoom.PlayerCount);
-            print("현재 방 최대 인원 수 : " + PhotonNetwork.CurrentRoom.MaxPlayers);
+            print("room name : " + PhotonNetwork.CurrentRoom.Name);
+            print("cur player # : " + PhotonNetwork.CurrentRoom.PlayerCount);
+            print("max player # : " + PhotonNetwork.CurrentRoom.MaxPlayers);
 
-            string playerStr = "방에 있는 플레이어 목록 : ";
+            string playerStr = "who are you???";
             for (int i=0; i<PhotonNetwork.PlayerList.Length; i++) playerStr += PhotonNetwork.PlayerList[i].NickName + ", ";
             print(playerStr);
         }
